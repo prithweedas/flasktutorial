@@ -9,6 +9,8 @@ app.config['SECRET_KEY'] = os.environ['FLASK_BLOG_SECRET']
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
+login_manager.login_view = 'users.login_user'
+login_manager.login_message_category = 'info'
 
 from flaskblog.users.routes import users_blueprint
 from flaskblog.posts.routes import posts_blueprint

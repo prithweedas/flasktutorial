@@ -1,4 +1,4 @@
-from flask import render_template, flash, redirect, url_for, Blueprint
+from flask import render_template, flash, redirect, url_for, Blueprint, request
 from flaskblog.users.forms import RegistrationForm, LoginForm
 from flask_login import login_user as user_login, current_user, logout_user as user_logout, login_required
 
@@ -32,7 +32,8 @@ def login_user():
         user = User.query.filter_by(username=form.username.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             user_login(user, remember=form.remember.data)
-            return redirect(url_for('index'))
+            next_page = request.args.get('next')
+            return redirect(next_page or url_for('index'))
         else:
             flash(f'Login Unsuccessful', 'danger')
 
@@ -46,5 +47,6 @@ def logout_user():
 
 
 @users_blueprint.route('/account')
+@login_required
 def user_account():
     return render_template('account.html', title='Account')
