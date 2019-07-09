@@ -40,8 +40,13 @@
             </div>
             <!-- Navbar Right Side -->
             <div class="navbar-nav">
-              <a class="nav-item nav-link" href="{{ url_for('users.login_user') }}">Login</a>
-              <a class="nav-item nav-link" href="{{ url_for('users.register_user') }}">Register</a>
+              {% if current_user.is_authenticated%}
+                <a class="nav-item nav-link" href="{{ url_for('users.user_account') }}">Account</a>
+                <a class="nav-item nav-link" href="{{ url_for('users.logout_user') }}">Log Out</a>
+              {% else %}
+                <a class="nav-item nav-link" href="{{ url_for('users.login_user') }}">Login</a>
+                <a class="nav-item nav-link" href="{{ url_for('users.register_user') }}">Register</a>
+              {% endif %}
             </div>
           </div>
         </div>
