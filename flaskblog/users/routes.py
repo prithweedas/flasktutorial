@@ -1,6 +1,8 @@
-from flask import render_template, flash, redirect, url_for
-from flaskblog.users import users_blueprint
+from flask import render_template, flash, redirect, url_for, Blueprint
 from flaskblog.users.forms import RegistrationForm, LoginForm
+
+users_blueprint = Blueprint('users', __name__, url_prefix='/user')
+from flaskblog import db
 
 
 @users_blueprint.route('/register', methods=['GET', 'POST'])
